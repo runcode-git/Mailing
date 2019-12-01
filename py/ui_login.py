@@ -66,7 +66,8 @@ class LoginMail(QtWidgets.QDialog):
                 self.btn_login.setCheckable(False)
 
         else:
-            QMessageBox.warning(self, 'Error email and password', MSG_LOGIN_LINE)
+            self.btn_login.setCheckable(False)
+            QMessageBox.warning(self.parent, 'Error email and password', MSG_LOGIN_LINE)
 
     def server_start(self):
         """ server login start """

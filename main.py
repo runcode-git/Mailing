@@ -77,7 +77,7 @@ if __name__ == '__main__':
             app.processEvents()
 
     # Simulate something that takes time
-    time.sleep(2)
+    time.sleep(1)
 
     splash.finish(mailing)
 
