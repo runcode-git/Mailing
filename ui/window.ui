@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>994</width>
+    <height>821</height>
+   </rect>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::ClickFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../icons/paper_plane_48px.png</normaloff>../icons/paper_plane_48px.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QToolBar {
+	background-color: rgba(0,0,0,.03);
+}
+
+QLineEdit {
+	padding: 4px;
+	color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+}
+
+
+</string>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>9</number>
+    </property>
+    <property name="topMargin">
+     <number>9</number>
+    </property>
+    <property name="rightMargin">
+     <number>9</number>
+    </property>
+    <property name="bottomMargin">
+     <number>9</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLineEdit" name="line_organisation">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="maxLength">
+         <number>100</number>
+        </property>
+        <property name="cursorPosition">
+         <number>0</number>
+        </property>
+        <property name="placeholderText">
+         <string comment="0">Organization</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="line_subject">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="maxLength">
+         <number>200</number>
+        </property>
+        <property name="placeholderText">
+         <string>Subject messages</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QWebEngineView" name="view_message" native="true">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhFormattedNumbersOnly</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::DefaultContextMenu</enum>
+   </property>
+   <property name="windowTitle">
+    <string>Menu</string>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::NoToolBarArea</set>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="login_from"/>
+   <addaction name="download_data"/>
+   <addaction name="separator"/>
+   <addaction name="attach_file"/>
+   <addaction name="clear_file"/>
+   <addaction name="separator"/>
+   <addaction name="download_template"/>
+   <addaction name="save_message_template"/>
+   <addaction name="separator"/>
+   <addaction name="send_test"/>
+   <addaction name="start_send"/>
+  </widget>
+  <action name="login_from">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/sender_none.png</normaloff>../icons/sender_none.png</iconset>
+   </property>
+   <property name="text">
+    <string>Login</string>
+   </property>
+   <property name="toolTip">
+    <string>Login from mail     Ctrl+L</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="download_data">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/recipient_none.png</normaloff>../icons/recipient_none.png</iconset>
+   </property>
+   <property name="text">
+    <string>csv</string>
+   </property>
+   <property name="toolTip">
+    <string>Download email databasel    Ctrl+C</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="start_send">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/sendes.png</normaloff>../icons/sendes.png</iconset>
+   </property>
+   <property name="text">
+    <string>sends msg</string>
+   </property>
+   <property name="toolTip">
+    <string>Send to everyone</string>
+   </property>
+  </action>
+  <action name="download_template">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/load_template.png</normaloff>../icons/load_template.png</iconset>
+   </property>
+   <property name="text">
+    <string>Temlate</string>
+   </property>
+   <property name="toolTip">
+    <string>Download temlate    Ctrl+T</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="attach_file">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/add_attach_file.png</normaloff>../icons/add_attach_file.png</iconset>
+   </property>
+   <property name="text">
+    <string>Aattach file</string>
+   </property>
+   <property name="toolTip">
+    <string>Attach file to email    Ctrl+F</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="save_message_template">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/save_settings.png</normaloff>../icons/save_settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>save message </string>
+   </property>
+   <property name="toolTip">
+    <string>Save  message    Ctrl+S</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="clear_file">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/clear_attach_file.png</normaloff>../icons/clear_attach_file.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clear attach file</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear file    Ctrl+D</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="send_test">
+   <property name="icon">
+    <iconset>
+     <normaloff>../icons/send_test.png</normaloff>../icons/send_test.png</iconset>
+   </property>
+   <property name="text">
+    <string>send msg</string>
+   </property>
+   <property name="toolTip">
+    <string>Send a test letter to your email    Ctrl+T</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebEngineView</class>
+   <extends>QWidget</extends>
+   <header>qwebengineview.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

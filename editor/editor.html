@@ -1,0 +1,146 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/all.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="nav text-secondary p-2 float-left w-100 fixed-top">
+    <!-- view code   -->
+    <div class="but px-2 border-right border-secondary" id="code_edit"><i class="fas fa-code"></i></div>
+
+    <!-- text redo &  undo  -->
+    <div id="undo" class="but px-2 freeze"><i class="fas fa-undo"></i></div>
+    <div id="redo" class="but px-2 freeze border-right border-secondary"><i class="fas fa-redo"></i></div>
+
+    <!-- menu heading   -->
+    <div id="heading" class="but px-2 freeze dropdown">
+        <i class="fas fa-heading dropdown-toggle" id="menu_heading" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+        <div class="dropdown-menu" aria-labelledby="menu_heading">
+            <div id="h1" class="but px-2 "><i class="fas fa-h1"></i></div>
+            <div id="h2" class="but px-2 "><i class="fas fa-h2"></i></div>
+            <div id="h3" class="but px-2 "><i class="fas fa-h3"></i></div>
+            <div id="h4" class="but px-2 "><i class="fas fa-h4"></i></div>
+        </div>
+    </div>
+
+    <!-- text format  -->
+    <div id="paragraph" class="but px-2 freeze"><i class="fas fa-paragraph"></i></div>
+    <div id="bold" class="but px-2 freeze"><i class="fas fa-bold"></i></div>
+    <div id="italic" class="but px-2 freeze"><i class="fas fa-italic"></i></div>
+    <div id="blockquote" class="but px-2 freeze"><i class="fas fa-quote-right"></i></div>
+    <div id="underline" class="but px-2 freeze "><i class="fas fa-underline"></i></div>
+    <div id="removeFormat" class="but px-2 freeze border-right border-secondary"><i class="fas fa-remove-format"></i>
+    </div>
+
+    <!-- menu font -->
+    <div class="but px-2 freeze border-right border-secondary">
+        <i class="fas fa-font dropdown-toggle" id="menu_font" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+        <div id="fontName" class="dropdown-menu" onmousedown="event.preventDefault();" aria-labelledby="menu_font" style="width: 150px">
+            <div class="but px-2 a">Arial</div>
+            <div class="but px-2 a">Arial Black</div>
+            <div class="but px-2 a">Bookman Old Style</div>
+            <div class="but px-2 a">Comic Sans MS</div>
+            <div class="but px-2 a">Courier</div>
+            <div class="but px-2 a">Tahoma</div>
+            <div class="but px-2 a">Times New Roman</div>
+            <div class="but px-2 a">Webdings</div>
+            <div class="but px-2 a">Verdana</div>
+            <div class="but px-2 a">Georgia</div>
+        </div>
+    </div>
+
+    <!-- menu font-size -->
+    <div class="but px-2 freeze border-right border-secondary dropdown">
+        <i class="fas fa-text-size dropdown-toggle" id="menu_font_size" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+        <div id="fontSize" class="dropdown-menu" aria-labelledby="menu_font_size" onmousedown="event.preventDefault();">
+            <div class="but px-2 ">1</div>
+            <div class="but px-2 ">2</div>
+            <div class="but px-2 ">3</div>
+            <div class="but px-2 ">5</div>
+            <div class="but px-2 ">6</div>
+            <div class="but px-2 ">7</div>
+        </div>
+    </div>
+
+    <!-- text color-font &  remove-color  -->
+    <div class="but px-2 freeze border-right border-secondary">
+        <input type="color" id="colorPicker" value="#75db91" name="head" style="display: none;">
+        <label class="but" for="colorPicker"><i class="fas fa-palette"></i></label>
+    </div>
+
+    <!-- text position  -->
+    <div id="justifyFull" class="but px-2 freeze"><i class="fas fa-align-justify"></i></div>
+    <div id="justifyLeft" class="but px-2 freeze"><i class="fas fa-align-left"></i></div>
+    <div id="justifyCenter" class="but px-2 freeze"><i class="fas fa-align-center"></i></div>
+    <div id="justifyRight" class="but px-2 freeze border-right border-secondary"><i class="fas fa-align-right"></i>
+    </div>
+
+    <!-- text indent  -->
+    <div id="indent" class="but px-2 freeze"><i class="fas fa-indent"></i></div>
+    <div id="outdent" class="but px-2 freeze border-right border-secondary"><i class="fas fa-outdent"></i></div>
+
+    <!-- text list-ol &  list-ul  -->
+    <div id="insertOrderedList" class="but px-2 freeze"><i class="fas fa-list-ol"></i></div>
+    <div id="insertUnorderedList" class="but px-2 freeze border-right border-secondary"><i class="fas fa-list-ul"></i>
+    </div>
+
+    <!-- text link &  unlink  -->
+    <div id="createLink" class="but px-2 freeze"><i class="fas fa-link"></i></div>
+    <div id="unlink" class="but px-2 freeze border-right border-secondary"><i class="fas fa-unlink"></i></div>
+
+    <!-- add img & video  -->
+    <div id="insertImage" class="but px-2 freeze border-right border-secondary" onmousedown="event.preventDefault();">
+        <i class="fas fa-image"></i></div>
+
+    <div id="userTag" class="but px-2 freeze border-right border-secondary"><i class="fas fa-user-tag"></i></div>
+
+    <div id="clear_message" class="but px-2 freeze border-right border-secondary" onmousedown="event.preventDefault();">
+        <i class="fas fa-trash-alt"></i></div>
+
+</div>
+<!--model dialog-->
+<div class="modal fade" id="add_file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="title_file" class="modal-title">title</h5>
+            </div>
+            <div class="modal-body">
+                <input id="url" class="form-control form-control-sm mb-2" type="text" placeholder="http://">
+                <div class="flex-row d-flex">
+                    <input id="width" class="form-control form-control-sm mr-1" type="text" placeholder="width">
+                    <input id="height" class="form-control form-control-sm ml-1" type="text" placeholder="height">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="download_file" type="button" class="btn btn-primary">Add img</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--content edit-->
+<div class="w-80" id="content_edit">
+    <!--  test content  -->
+    <div id="message_html" style="min-height:85vh">
+
+        <html><body><div id="message"><h1>Hello My Find</h1><p>message content</p></div></body></html></div>
+    <file id="file" class="fixed-bottom">
+        </file>
+    <!--  test content  -->
+</div>
+
+<script src="js/editor.js"></script>
+</body>
+</html>

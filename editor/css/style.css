@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+i {
+    border: none;
+}
+
+#code_html {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    padding: 3px 0;
+}
+
+#message_string, #message_html {
+    margin-top: 35px;
+    padding: 10px;
+}
+
+.but {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.but:hover {
+    cursor: pointer;
+    color: #0062cc;
+}
+
+.dropdown-menu.show{
+    min-width: auto;
+}
+
+#content_edit{
+    margin-top: 30px;
+    padding: 0;
+}
+
+#code_html, #string_html{
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    background: #f0f0f0;
+    user-select: none;
+}
+
+input[type="file"] {
+    display: none;
+}
