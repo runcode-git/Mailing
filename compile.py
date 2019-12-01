@@ -1,22 +1,23 @@
 # -*- coding: utf-8 -*-
 #  ---------------------------------------------------------------------------------------------------------------------
+import datetime
 import os
 import re
 
 from PyQt5.QtCore import QSettings
 from git import Repo
-
+TODAY = datetime.date.today().year
 USER = os.getlogin()
 PROJECT = (re.findall(r'\w+$', os.getcwd()))[0]
 VERSION = re.sub(r'^\s+|\n|\r|\s+$', '', Repo('.git').commit().message).split('.')  # version mailing 0.0.0.0
 DESCRIPTION = f'{PROJECT} - Application for processing and sending emails to email.'
-COPYRIGHT = f"{USER} © 2019"
+COPYRIGHT = f"{USER} © {TODAY}"
 
 VERSION_INFO = f"""
 VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=({VERSION[0]}, {VERSION[1]}, 0, 0),
-    prodvers=({VERSION[0]}, {VERSION[1]}, 0, 0),
+    filevers=({VERSION[0]}, {VERSION[1]}, {VERSION[2]}, {VERSION[3]}),
+    prodvers=({VERSION[0]}, {VERSION[1]}, {VERSION[2]}, {VERSION[3]}),
     mask=0x3f,
     flags=0x0,
     OS=0x40004,
@@ -43,7 +44,7 @@ VSVersionInfo(
 """
 
 COMMAND_BAT = f"""
-pyinstaller -w -D -i  {os.getcwd()}\\{PROJECT}.ico 
+pyinstaller -w -D -i {os.getcwd()}\\{PROJECT}.ico 
 --version-file info.{PROJECT} 
 --add-data "{os.getcwd()}\\ui\\*.ui;ui" 
 --add-data "{os.getcwd()}\\py\\*.py;py" 
