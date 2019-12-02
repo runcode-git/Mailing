@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>357</width>
-    <height>120</height>
+    <height>134</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,13 +22,13 @@
   <property name="minimumSize">
    <size>
     <width>357</width>
-    <height>120</height>
+    <height>134</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>653</width>
-    <height>120</height>
+    <height>134</height>
    </size>
   </property>
   <property name="cursor">
@@ -86,63 +86,81 @@ QPushButton:checked {
      <property name="title">
       <string>Enter email and password</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QLineEdit" name="line_from_email">
-          <property name="autoFillBackground">
-           <bool>false</bool>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLineEdit" name="line_from_email">
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="placeholderText">
+             <string>email</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="line_from_password">
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+            <property name="placeholderText">
+             <string>password</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_login">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
           <property name="text">
            <string/>
           </property>
-          <property name="placeholderText">
-           <string>email</string>
+          <property name="icon">
+           <iconset>
+            <normaloff>../icons/login.png</normaloff>
+            <activeon>../icons/unlogin.png</activeon>../icons/login.png</iconset>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="line_from_password">
-          <property name="echoMode">
-           <enum>QLineEdit::Password</enum>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
           </property>
-          <property name="placeholderText">
-           <string>password</string>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_login">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../icons/login.png</normaloff>
-          <activeon>../icons/unlogin.png</activeon>../icons/login.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QCheckBox" name="chk_save_login">
+          <property name="text">
+           <string>save email and password</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

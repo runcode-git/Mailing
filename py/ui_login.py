@@ -4,7 +4,7 @@ import smtplib
 import ssl
 
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSettings
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox
 
@@ -22,6 +22,9 @@ class LoginMail(QtWidgets.QDialog):
         self.from_email = None
         self.password = None
 
+        self.settings = QSettings('login.ini', QSettings.IniFormat)
+        self.settings.setIniCodec('utf-8')
+
         self.init_login_ui()
 
     def init_login_ui(self):
@@ -32,13 +35,29 @@ class LoginMail(QtWidgets.QDialog):
         self.setWindowFlag(Qt.WindowMinMaxButtonsHint)
 
         self.btn_login.clicked.connect(self.login_sender_email)
+        self.chk_save_login.stateChanged.connect(self.save_login)
+        # ---------------------------------------------
+
+        email_password = self.settings.value('Login/email')
+
+        if email_password:
+            self.line_from_email.setText(self.settings.value('Login/email'))
+            self.line_from_password.setText(self.settings.value('Login/password'))
 
         # ---------------------------------------------
 
-        # self.line_from_email.setText("runcode@bk.ru")
-        # self.line_from_password.setText("3MEUR9preif^")
+    def save_login(self, state):
+        """ save email and pssaword"""
 
-        # ---------------------------------------------
+        if state == Qt.Checked:
+
+            self.settings.beginGroup('Login')
+            self.settings.setValue("email", self.line_from_email.text())
+            self.settings.setValue("password", self.line_from_password.text())
+            self.settings.endGroup()
+
+        else:
+            self.settings.clear()
 
     def set_from(self):
         """ set from email """
