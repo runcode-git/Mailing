@@ -44,6 +44,8 @@ class LoginMail(QtWidgets.QDialog):
             self.line_from_email.setText(self.settings.value('Login/email'))
             self.line_from_password.setText(self.settings.value('Login/password'))
 
+        # email = runcode@bk.ru
+        # password = 3MEUR9preif^
         # ---------------------------------------------
 
     def save_login(self, state):

@@ -57,7 +57,7 @@ pyinstaller -w -D -i {os.getcwd()}\\{PROJECT}.ico
 INFO = {
     'username': USER,
     'name': PROJECT,
-    'version': f'{VERSION[0]}.{VERSION[1]}',
+    'version': f'{VERSION[0]}.{VERSION[1]}.{VERSION[2]}',
     'description': DESCRIPTION,
     'copyright': COPYRIGHT
 }
