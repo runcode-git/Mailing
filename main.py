@@ -81,5 +81,5 @@ if __name__ == '__main__':
 
     splash.finish(mailing)
 
-    mailing.showMaximized()
+    mailing.show()
     app.exec_()
