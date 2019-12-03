@@ -90,12 +90,14 @@ class MallingApp(QMainWindow):
     def open_attach_file(self):
         """ open file attachment dialog """
 
+        self.cls_message.scan_message()
         self.data_files = self.cls_attach.add_file()
         self.cls_message.load_message()
 
     def clear_attach_file(self):
         """ Clear file attach"""
 
+        self.cls_message.scan_message()
         self.cls_attach.clear_attach_file()
         self.cls_message.load_message()
 
