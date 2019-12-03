@@ -1,7 +1,19 @@
 # -*- coding: utf-8 -*-
 #  ---------------------------------------------------------------------------------------------------------------------
-from main import *
-from py.static import *
+import smtplib
+import ssl
+import os
+import traceback
+from email import encoders
+from email.header import Header
+from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.utils import formatdate, formataddr
+from lxml import etree, html
+
+from main import MESSAGE_HTML
+from py.static import domain_server, read_file, save_file
 
 
 class SendMessage:
@@ -72,7 +84,7 @@ class SendMessage:
             msg.attach(MIMEText(self.message, "html"))
 
             for file in self.files:
-                file_message(file, msg)
+                self.file_message(file, msg)
 
             msg.add_header('Content-Type', 'text/html')
             msg['Subject'] = self.subject

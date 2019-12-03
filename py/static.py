@@ -56,22 +56,6 @@ def save_file(name_file, message):
         file.close()
 
 
-def file_message(files, msg_part):
-    """ Open file in binary mode """
-
-    with open(files, "rb") as attachment:
-        part = MIMEBase("application", "octet-stream")
-        part.set_payload(attachment.read())
-
-    encoders.encode_base64(part)
-
-    part.add_header(
-        "Content-Disposition",
-        f"attachment; filename= {os.path.basename(files)}",
-    )
-    msg_part.attach(part)
-
-
 def create_message():
     """ create message.html """
 
