@@ -5,7 +5,7 @@ from PyQt5 import uic
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5 import QtGui
-from main import ICON, MESSAGE_HTML, EDITOR_HTML
+from main import ICON, MESSAGE_HTML, EDITOR_HTML, resource_path
 from lxml import html
 
 
