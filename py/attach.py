@@ -5,7 +5,7 @@ import os
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from lxml import etree
 
-from main import EDITOR_HTML
+from Mailing import EDITOR_HTML
 from py.static import parse_message, save_file
 
 

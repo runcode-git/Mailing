@@ -2,7 +2,7 @@
 #  ---------------------------------------------------------------------------------------------------------------------
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 
-from main import PROJECT, QWebEngineSettings
+from Mailing import PROJECT, QWebEngineSettings
 from py.attach import AttachClearFile
 from py.database import DataBaseCsv
 from py.message import LoadUpdateMassage
