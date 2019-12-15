@@ -3,13 +3,20 @@
 import datetime
 import os
 import re
+import sys
+import shutil
+
+import PyInstaller.__main__
+import PyInstaller.config
 
 from PyQt5.QtCore import QSettings
 from git import Repo
+
+PATHPROJECT = (os.path.dirname(os.path.abspath('.')))
 TODAY = datetime.date.today().year
 USER = os.getlogin()
-PROJECT = (re.findall(r'\w+$', os.getcwd()))[0]
-VERSION = re.sub(r'^\s+|\n|\r|\s+$', '', Repo('.git').commit().message).split('.')  # version mailing 0.0.0.0
+PROJECT = (re.findall(r'\w+$', PATHPROJECT))[0]  # project name
+VERSION = re.sub(r'^\s+|\n|\r|\s+$', '', Repo('../.git').commit().message).split('.')  # version mailing 0.0.0.0
 DESCRIPTION = f'{PROJECT} - Application for processing and sending emails to email.'
 COPYRIGHT = f"{USER} © {TODAY}"
 
@@ -62,25 +69,47 @@ INFO = {
     'copyright': COPYRIGHT
 }
 
-compile_dir = 'compile'
-path = f'{os.getcwd()}\\{compile_dir}'
+path = '..\\exe'
 os.makedirs(path, exist_ok=True)
 
-
 def create_info():
-    with open(f"{compile_dir}/info.{PROJECT}", 'w', encoding='utf-8') as file:
+    with open(f"{path}/info.{PROJECT}", 'w', encoding='utf-8') as file:
         file.write(VERSION_INFO)
         file.close()
 
 
-def create_bat():
-    with open(f"{compile_dir}/{PROJECT}.bat", 'w', encoding='utf-8') as file:
-        file.write(re.sub(r'^\s+|\n|\r|\s+$', '', COMMAND_BAT))
-        file.close()
+# def create_bat():
+#     with open(f"{path}/{PROJECT}.bat", 'w', encoding='utf-8') as file:
+#         file.write(re.sub(r'^\s+|\n|\r|\s+$', '', COMMAND_BAT))
+#         file.close()
+
+def compile_project():
+
+    shutil.rmtree(os.path.join(f'.\\dist\\{PROJECT}'), ignore_errors=True)
+    # удаляем папку скомпелированного проекта, если  она существует
+
+    PyInstaller.__main__.run([
+        '--name=%s' % PROJECT,
+        # '--distpath=%s' % os.path.join(path, 'dist'),
+        # '--workpath=%s' % os.path.join(path, 'buld'),
+        # '--specpath=%s' % os.path.join(path),
+        # '--onefile',
+         '--windowed',
+        # '--key='
+        '--add-data=%s' % os.path.join('..', 'ui', '*.ui;ui'),
+        '--add-data=%s' % os.path.join('..', 'py', '*.py;py'),
+        '--add-data=%s' % os.path.join('..', 'icons', '*.png;icons'),
+        '--add-data=%s' % os.path.join('..', 'editor', ';editor'),
+        '--version-file=%s' % os.path.join('.', f'info.{PROJECT}'),
+        '--icon=%s' % os.path.join('..', f'{PROJECT}.ico'),
+        '--add-data=%s' % os.path.join('..', 'info.ini;.'),
+        '--add-data=%s' % os.path.join('..', f'{PROJECT}.ico;.'),
+        os.path.join('..', f'{PROJECT}.py'),
+    ])
 
 
 def version_project():
-    settings = QSettings(f'{os.getcwd()}\\info.ini', QSettings.IniFormat)
+    settings = QSettings(f'..\\info.ini', QSettings.IniFormat)
     settings.setIniCodec('utf-8')
 
     for item in INFO:
@@ -91,5 +120,6 @@ def version_project():
 
 if __name__ == '__main__':
     version_project()
-    create_info()
-    create_bat()
+    # create_info()
+    compile_project()
+    # create_bat()
