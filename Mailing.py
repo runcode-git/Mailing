@@ -20,7 +20,7 @@ def resource_path(relative_path):
 
 
 def get_info(info):
-    settings = QSettings('info.ini', QSettings.IniFormat)
+    settings = QSettings('./config/info.ini', QSettings.IniFormat)
     settings.setIniCodec('utf-8')
 
     return settings.value(f'Info/{info}')

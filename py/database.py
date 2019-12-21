@@ -5,7 +5,7 @@ import os
 
 from PyQt5.QtGui import QIcon
 
-from Mailing import CSV_FILE, GROUP_EMAIL, PROJECT, resource_path
+from mailing import CSV_FILE, GROUP_EMAIL, PROJECT, resource_path
 from py.static import open_file
 
 

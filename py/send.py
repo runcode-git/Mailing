@@ -12,7 +12,7 @@ from email.mime.text import MIMEText
 from email.utils import formatdate, formataddr
 from lxml import etree, html
 
-from Mailing import MESSAGE_HTML
+from mailing import MESSAGE_HTML
 from py.static import domain_server, read_file, save_file
 
 

@@ -4,7 +4,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QFileDialog
 from lxml import html, etree
 
-from Mailing import HTML_FILE, MESSAGE_HTML, EDITOR_HTML
+from mailing import HTML_FILE, MESSAGE_HTML, EDITOR_HTML
 from py.static import create_message, open_file, read_file, save_file, parse_message
 
 

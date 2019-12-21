@@ -8,7 +8,7 @@ from PyQt5.QtCore import Qt, QSettings
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox
 
-from Mailing import MSG_LOGIN_LINE, MSG_ERROR_SERVER, MSG_ERROR_LOGIN, PROJECT, resource_path
+from mailing import MSG_LOGIN_LINE, MSG_ERROR_SERVER, MSG_ERROR_LOGIN, PROJECT, resource_path
 from py.static import connect_ui, close_dialog, domain_server
 
 
@@ -22,7 +22,7 @@ class LoginMail(QtWidgets.QDialog):
         self.from_email = None
         self.password = None
 
-        self.settings = QSettings('login.ini', QSettings.IniFormat)
+        self.settings = QSettings('./config/login.ini', QSettings.IniFormat)
         self.settings.setIniCodec('utf-8')
 
         self.init_login_ui()

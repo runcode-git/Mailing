@@ -5,7 +5,7 @@ import os
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from lxml import etree
 
-from Mailing import EDITOR_HTML
+from mailing import EDITOR_HTML
 from py.static import parse_message, save_file
 
 
@@ -28,7 +28,7 @@ class AttachClearFile:
     def add_file(self):
         """ Attach file open ui """
 
-        dialog = FileDialog(self.parent)
+        dialog = FileDialog(self.parent, 'Add files message', '/home')
         if dialog.exec_() == QDialog.Accepted:
 
             for item in dialog.selectedFiles():
