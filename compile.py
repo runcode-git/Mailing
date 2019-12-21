@@ -1,119 +1,143 @@
 # -*- coding: utf-8 -*-
 #  ---------------------------------------------------------------------------------------------------------------------
-import datetime
 import os
 import re
-import sys
 import shutil
+import sys
+import traceback
 
 import PyInstaller.__main__
-from PyQt5 import QtWidgets, QtCore
 
 from PyQt5.QtCore import QSettings
-from PyQt5.QtWidgets import QDialog, QFileDialog
-from git import Repo
-
-TODAY = datetime.date.today().year
-USER = os.getlogin()
-PROJECT = (re.findall(r'\w+$', os.getcwd()))[0]  # project name
-project = PROJECT.lower()
-VERSION = re.sub(r'^\s+|\n|\r|\s+$', '', Repo('.git').commit().message).split('.')  # version mailing 0.0.0.0
-DESCRIPTION = f'{PROJECT} - Application for processing and sending emails to email.'
-COPYRIGHT = f"{USER} © {TODAY}"
-
-VERSION_INFO = f"""
-VSVersionInfo(
-  ffi=FixedFileInfo(
-    filevers=({VERSION[0]}, {VERSION[1]}, {VERSION[2]}, {VERSION[3]}),
-    prodvers=({VERSION[0]}, {VERSION[1]}, {VERSION[2]}, {VERSION[3]}),
-    mask=0x3f,
-    flags=0x0,
-    OS=0x40004,
-    fileType=0x1,
-    subtype=0x0,
-    date=(0, 0)
-    ),
-  kids=[
-    StringFileInfo(
-      [
-      StringTable(
-        u'040904B0',
-        [StringStruct(u'CompanyName', u'{USER}'),
-        StringStruct(u'FileDescription', u'{DESCRIPTION}'),
-        StringStruct(u'FileVersion', u'{VERSION[0]}.{VERSION[1]}'),
-        StringStruct(u'InternalName', u'cmd'),
-        StringStruct(u'LegalCopyright', u'{COPYRIGHT}'),
-        StringStruct(u'OriginalFilename', u'{PROJECT}.exe'),
-        StringStruct(u'ProductName', u'{project}'),
-        StringStruct(u'ProductVersion', u'{VERSION[0]}.{VERSION[1]}')])]),
-    VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
-  ]
-)
-"""
-
-INFO = {
-    'username': USER,
-    'name': PROJECT,
-    'version': f'{VERSION[0]}.{VERSION[1]}.{VERSION[2]}',
-    'description': DESCRIPTION,
-    'copyright': COPYRIGHT
-}
+from PyQt5.QtWidgets import QFileDialog, QListView, QTreeView, QFileSystemModel, QAbstractItemView, QApplication
+from git import Repo, NoSuchPathError
 
 
-def version_project():
-    settings = QSettings(f'./config/info.ini', QSettings.IniFormat)
-    settings.setIniCodec('utf-8')
+class CreateInfo:
 
-    for item in INFO:
-        settings.beginGroup('Info')
-        settings.setValue(item, INFO[item])
-        settings.endGroup()
+    def __init__(self):
 
-    print('1. info.ini file created successfully')
+        self.info = QSettings(f'.\\config\\info.ini', QSettings.IniFormat)
+        self.info.setIniCodec('utf-8')
+
+        self.user = os.getlogin()
+        self.project = os.getcwd().split('\\')[-1]
+        self.version = self.load_version()
+        self.description = f'{self.project} - {self.create_description()}'
+        self.copyright = f"www.{self.user.lower()}.ru"
+
+        self.save_info()
+
+    def save_info(self):
+
+        info = self.generate_info()
+
+        for item in info:
+            self.info.beginGroup('Info')
+            self.info.setValue(item, info[item])
+            self.info.endGroup()
+
+        print(':' * 100)
+        print(f'{os.getcwd()}\\config\\info.ini file created successfully')
+
+    def load_version(self):
+
+        try:
+            self.version = re.sub(r'^\s+|\n|\r|\s+$', '', Repo('.git').commit().message)
+
+        except NoSuchPathError:
+
+            self.version = input('Enter format version project 0.0.0.0\nversion:')
+
+        return self.version
+
+    def create_description(self):
+
+        self.description = input('Enter description project \ndescription:')
+
+        return self.description
+
+    def generate_info(self):
+
+        info = {
+            'username': self.user,
+            'name': self.project,
+            'version': self.version,
+            'description': self.description,
+            'copyright': self.copyright
+        }
+
+        return info
 
 
 class CompileProject:
 
-    def __init__(self, name_path, name_project):
+    def __init__(self):
+
         self.install = []
-        self.name = name_project
-        self.path = name_path
+        self.name = os.getcwd().split('\\')[-1]
+        self.path = 'compile'
         self.key = ""
-        self.data = ['py', 'ui', 'editor', 'icons', 'config']
+        self.data = ""
+
+        self.info = QSettings(f'./config/info.ini', QSettings.IniFormat)
+        self.version = self.info.value('Info/version')
 
         self.create_path()
         self.create_info()
 
+        self.compile()
+
     def compile(self):
-        print(f'2. Compile project {self.name} {VERSION[0]}.{VERSION[1]}.{VERSION[2]}')
+        print(f'Compile project {self.name} ver.{self.version}')
 
         shutil.rmtree(os.path.join(f'{self.path}\\dist\\{self.name}'), ignore_errors=True)
-        print('3. Start  PyInstaller...')
+        print('Start  PyInstaller...')
         PyInstaller.__main__.run(self.collect_install())
 
     def create_path(self):
 
         os.makedirs(self.path, exist_ok=True)
 
+    @staticmethod
+    def add_folders(app):
+
+        dialog = QFileDialog()
+        dialog.setOption(dialog.DontUseNativeDialog, True)
+        dialog.setFileMode(dialog.DirectoryOnly)
+        dialog.setDirectory(os.getcwd())
+
+        for view in dialog.findChildren((QListView, QTreeView)):
+            if isinstance(view.model(), QFileSystemModel):
+                view.setSelectionMode(QAbstractItemView.MultiSelection)
+
+        if dialog.exec_() == dialog.Accepted:
+            return [directory.rsplit('/')[-1] for directory in dialog.selectedFiles()]
+
     def collect_install(self):
 
         self.project_name()
         self.dist_path()
-        self.wind_owed()
         self.work_path()
         self.spec_path()
-        self.add_data()
+
+        if input('Add console? (y/n):') == 'n':
+            self.wind_owed()
+        else:
+            self.no_wind_owed()
+
+        if input('To collect in one exe file? (y/n):') == 'y':
+            self.one_file()
+
+        if input('Add resource folder? (y/n):') == 'y':
+            self.data = self.add_folders(QApplication(sys.argv))
+            self.add_data()
+
         self.version_file()
         self.icon()
         self.main_project()
 
         return self.install
-
-    def create_info(self):
-
-        with open(f"{self.path}/info.{self.name.lower()}", 'w', encoding='utf-8') as file:
-            file.write(VERSION_INFO)
-            file.close()
 
     def project_name(self):
 
@@ -131,6 +155,10 @@ class CompileProject:
 
         self.install.append('--windowed')
 
+    def no_wind_owed(self):
+
+        self.install.append('--nowindowed')
+
     def coding_key(self):
 
         self.install.append('--key=%s' % self.key)
@@ -145,8 +173,9 @@ class CompileProject:
 
     def add_data(self):
 
-        for item in self.data:
-            self.install.append('--add-data=%s' % os.path.join(os.getcwd(), item, f';{item}'))
+        if self.data is not None:
+            for item in self.data:
+                self.install.append('--add-data=%s' % os.path.join(os.getcwd(), item, f';{item}'))
 
     def version_file(self):
 
@@ -154,36 +183,85 @@ class CompileProject:
 
     def icon(self):
 
-        self.install.append('--add-data=%s' % os.path.join(os.getcwd(), f'{self.name.lower()}.ico;.'))
-        self.install.append('--icon=%s' % os.path.join(os.getcwd(), f'{self.name.lower()}.ico'))
+        icon = f'{os.getcwd()}\\{self.name.lower()}.ico'
+        if os.path.isfile(icon):
+            self.install.append('--add-data=%s' % os.path.join(os.getcwd(), f'{self.name.lower()}.ico;.'))
+            self.install.append('--icon=%s' % os.path.join(os.getcwd(), f'{self.name.lower()}.ico'))
 
     def main_project(self):
 
         self.install.append(os.path.join(os.getcwd(), f'{self.name.lower()}.py'))
 
+    def create_info(self):
+
+        info_content = self.generate_info()
+
+        with open(f"{self.path}/info.{self.name.lower()}", 'w', encoding='utf-8') as file:
+            file.write(info_content)
+            file.close()
+
+    def generate_info(self):
+
+        ver_index = self.version.split('.')
+
+        info_content = f"""
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=({ver_index[0]}, {ver_index[1]}, {ver_index[2]}, {ver_index[3]}),
+    prodvers=({ver_index[0]}, {ver_index[1]}, {ver_index[2]}, {ver_index[3]}),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+    ),
+  kids=[
+    StringFileInfo(
+      [
+      StringTable(
+        u'040904B0',
+        [StringStruct(u'CompanyName', u'{self.info.value('Info/username')}'),
+        StringStruct(u'FileDescription', u'{self.info.value('Info/description')}'),
+        StringStruct(u'FileVersion', u'{self.version}'),
+        StringStruct(u'InternalName', u'cmd'),
+        StringStruct(u'LegalCopyright', u'{self.info.value('Info/copyright')}'),
+        StringStruct(u'OriginalFilename', u'{self.name}.exe'),
+        StringStruct(u'ProductName', u'{self.name}'),
+        StringStruct(u'ProductVersion', u'{self.version}')])]),
+    VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
+  ]
+)"""
+        return info_content
+
     # -------------------------------- end create
 
 
 def setup_compile():
+    print('Enter command number:\nversion(1)\ncompile(2)\nexit(3)\n')
+    try:
+        command = int(input('number:'))
 
-    print('Enter command number:\n1 - version]\n2 - compile\n3 - exit\n')
+        if command == 1:
+            try:
+                CreateInfo()
 
-    command = input('number:')
+            except Exception as e:
+                print('Ошибка:\n', traceback.format_exc())
 
-    if int(command) == 1:
+        elif command == 2:
 
-        version_project()
+            if not f'{os.getcwd()}\\config\\info.ini':
+                CreateInfo()
 
-    elif int(command) == 2:
+            CompileProject()
 
-        version_project()
-        run_compile = CompileProject('compile', PROJECT)
-        run_compile.compile()
+        elif command >= 3:
+            exit()
 
-    elif int(command) >= 3:
-        exit()
+    except ValueError:
+        print('Not a number but a string!')
 
 
 if __name__ == '__main__':
-
     setup_compile()
