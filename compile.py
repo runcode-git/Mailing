@@ -2,6 +2,7 @@
 #  ---------------------------------------------------------------------------------------------------------------------
 import os
 import re
+import secrets
 import shutil
 import sys
 import traceback
@@ -77,7 +78,7 @@ class CompileProject:
         self.install = []
         self.name = os.getcwd().split('\\')[-1]
         self.path = 'compile'
-        self.key = ""
+        self.key = secrets.token_hex(16)
         self.data = ""
 
         self.info = QSettings(f'./config/info.ini', QSettings.IniFormat)
@@ -89,10 +90,10 @@ class CompileProject:
         self.compile()
 
     def compile(self):
-        print(f'Compile project {self.name} ver.{self.version}')
+        print(f'1. Compile project {self.name} ver.{self.version}')
 
         shutil.rmtree(os.path.join(f'{self.path}\\dist\\{self.name}'), ignore_errors=True)
-        print('Start  PyInstaller...')
+        print('2. Start  PyInstaller...')
         PyInstaller.__main__.run(self.collect_install())
 
     def create_path(self):
@@ -120,16 +121,17 @@ class CompileProject:
         self.dist_path()
         self.work_path()
         self.spec_path()
+        # self.coding_key()
 
-        if input('Add console? (y/n):') == 'n':
+        if input('3. Add console? (y/n):') == 'n':
             self.wind_owed()
         else:
             self.no_wind_owed()
 
-        if input('To collect in one exe file? (y/n):') == 'y':
+        if input('4. To collect in one exe file? (y/n):') == 'y':
             self.one_file()
 
-        if input('Add resource folder? (y/n):') == 'y':
+        if input('5. Add resource folder? (y/n):') == 'y':
             self.data = self.add_folders(QApplication(sys.argv))
             self.add_data()
 
@@ -141,7 +143,7 @@ class CompileProject:
 
     def project_name(self):
 
-        self.install.append('--name=%s' % self.name)
+        self.install.append('--name=%s' % self.name.lower())
 
     def dist_path(self):
 
@@ -160,7 +162,7 @@ class CompileProject:
         self.install.append('--nowindowed')
 
     def coding_key(self):
-
+        print(self.key)
         self.install.append('--key=%s' % self.key)
 
     def work_path(self):
