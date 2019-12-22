@@ -24,7 +24,7 @@ def connect_ui(win, file_ui):
 def open_file(dialog, file):
     """ open file dialog"""
 
-    file = QFileDialog.getOpenFileName(dialog, "Open File", './', file)[0]
+    file = QFileDialog.getOpenFileName(dialog, "Open File", '/home', file)[0]
 
     if not os.path.exists(file):
         return

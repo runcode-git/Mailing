@@ -34,7 +34,7 @@ class LoadUpdateMassage:
         """save message template html """
 
         self.scan_message()
-        save_dialog = QFileDialog.getSaveFileName(self.parent, 'Save File', './', 'HTML Files(*.html)')[0]
+        save_dialog = QFileDialog.getSaveFileName(self.parent, 'Save File', '/home', 'HTML Files(*.html)')[0]
         if save_dialog != '':
             save_file(str(save_dialog), self.message)
 
